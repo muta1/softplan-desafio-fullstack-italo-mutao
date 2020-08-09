@@ -1,0 +1,13 @@
+﻿<div class="card mt-4">
+  <h4 class="card-header">Seja bem vindo {{ currentUser.username }} !!</h4>
+  <div class="card-body">
+    <p>
+      Você é: <strong>{{ currentUser.role }}</strong
+      >.
+    </p>
+    <p>
+      Essa página pode ser visualizada por <u>todos usuários autenticados</u>.
+    </p>
+    <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+  </div>
+</div>

@@ -28,4 +28,6 @@ public class UserDTO {
 	private String password;
 	@Column(name = "role")
 	private String role;
+	
+
 }
