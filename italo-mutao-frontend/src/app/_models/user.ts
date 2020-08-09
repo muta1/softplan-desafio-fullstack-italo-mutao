@@ -7,5 +7,6 @@ export class User {
   sessionCookieKey: string;
   sessionCookieValue: string;
   token?: string;
-  username: string;
+  name: string;
+  password: string;
 }

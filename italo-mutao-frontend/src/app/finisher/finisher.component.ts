@@ -14,11 +14,11 @@ export class FinisherComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.userService
-      .getAll()
+      .getUsers()
       .pipe(first())
-      .subscribe((users) => {
+      .subscribe((api) => {
         this.loading = false;
-        this.users = users;
+        this.users = api.response;
       });
   }
 }

@@ -26,11 +26,11 @@ export class HomeComponent {
     //     this.userFromApi = user;
     // });
     this.userService
-      .getAll()
+      .getUsers()
       .pipe(first())
-      .subscribe((users) => {
+      .subscribe((api) => {
         this.loading = false;
-        this.users = users;
+        this.users = api.response;
         console.log(this.users);
 
         // this.userFromApi = user;

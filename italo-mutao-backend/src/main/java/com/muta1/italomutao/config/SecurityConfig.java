@@ -24,7 +24,7 @@ import com.muta1.italomutao.filters.CorsFilter;
 import com.muta1.italomutao.security.jwt.JwtAuthenticationEntryPoint;
 import com.muta1.italomutao.security.jwt.JwtRequestFilter;
 import com.muta1.italomutao.security.service.SecurityService;
-import com.muta1.italomutao.user.dto.UserDTO;
+import com.muta1.italomutao.user.entity.User;
 
 @Configuration
 @EnableWebSecurity
@@ -73,8 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(detailsService).passwordEncoder(UserDTO.PASSWORD_ENCODER);
-	}
+		auth.userDetailsService(detailsService).passwordEncoder(User.PASSWORD_ENCODER);
+	}	
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {

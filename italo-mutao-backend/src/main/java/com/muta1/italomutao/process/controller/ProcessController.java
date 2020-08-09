@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.muta1.italomutao.process.dto.ProcessDTO;
@@ -23,23 +24,28 @@ public class ProcessController {
 	private ProcessService processService;
 
 	@GetMapping()
-	public List<ProcessDTO> Getprocesss() {
-		return processService.getAllProcesses();
+	public List<ProcessDTO> getProcesses() {
+		return ProcessDTO.toDTOList(processService.getAllProcesses());
 	}
 
-	@PostMapping()
-	public ProcessDTO postUser(@RequestBody ProcessDTO process) {
-		return this.processService.createProcess(process);
+	@GetMapping(path = "read")
+	public ProcessDTO getProcess(@RequestParam Long id) {
+		return ProcessDTO.toDTO(processService.getProcess(id));
 	}
 
-	@PutMapping()
-	public ProcessDTO putUser(@RequestBody ProcessDTO process) {
-		return this.processService.updateProcess(process);
+	@PostMapping(path = "create")
+	public ProcessDTO postProcess(@RequestBody ProcessDTO process) {
+		return ProcessDTO.toDTO(this.processService.createProcess(ProcessDTO.toEntity(process)));
 	}
 
-	@DeleteMapping()
-	public void deleteUser(@RequestBody ProcessDTO process) {
-		this.processService.removeProcess(process);
+	@PutMapping(path = "update")
+	public ProcessDTO putProcess(@RequestBody ProcessDTO process) {
+		return ProcessDTO.toDTO(this.processService.updateProcess(ProcessDTO.toEntity(process)));
+	}
+
+	@DeleteMapping(path = "delete")
+	public void deleteProcess(@RequestBody Long id) {
+		this.processService.removeProcess(id);
 	}
 
 }

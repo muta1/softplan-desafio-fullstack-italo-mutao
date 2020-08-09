@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.muta1.italomutao.exception.CodeException;
 import com.muta1.italomutao.exception.ExceptionValidation;
 import com.muta1.italomutao.exception.ServiceException;
-import com.muta1.italomutao.user.dto.UserDTO;
+import com.muta1.italomutao.user.entity.User;
 import com.muta1.italomutao.user.repository.UserRepository;
 
 @Service
@@ -17,20 +17,25 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public List<UserDTO> getAllUsers() {
+	public List<User> getAllUsers() {
 		return this.userRepository.findAll();
 	}
 
-	public UserDTO createUser(UserDTO user) throws ExceptionValidation, ServiceException {
+	public User getUser(Long id) {
+		return this.userRepository.getOne(id);
+	}
+
+	public User createUser(User user) throws ExceptionValidation, ServiceException {
 		if (user == null) {
 			throw new ServiceException("Nao foi possivel criar o registro person pois o mesmo esta nulo",
 					CodeException.GENERAL);
 		}
-
+		// bcrypt password
+		user.setPassword(User.PASSWORD_ENCODER.encode(user.getPassword()));
 		return this.userRepository.save(user);
 	}
 
-	public UserDTO updateUser(UserDTO user) {
+	public User updateUser(User user) {
 		if (user == null) {
 			throw new ServiceException("Update user fail, user must not be null.", CodeException.GENERAL);
 		}
@@ -39,7 +44,7 @@ public class UserService {
 			throw new ExceptionValidation("id", "Update user fail, id must not be null.");
 		}
 
-		UserDTO userFromDb = userRepository.getOne(user.getId());
+		User userFromDb = userRepository.getOne(user.getId());
 		// crush the variables of the object found
 		userFromDb.setName(user.getName());
 		userFromDb.setPassword(user.getPassword());
@@ -48,12 +53,12 @@ public class UserService {
 		return userRepository.save(userFromDb);
 	}
 
-	public void removeUser(UserDTO user) {
-		if (user == null) {
-			throw new ServiceException("Delete user fail, user must not be null.", CodeException.GENERAL);
+	public void removeUser(Long id) {
+		if (id == null) {
+			throw new ServiceException("Delete user fail, id must not be null.", CodeException.GENERAL);
 		}
 
-		this.userRepository.delete(user);
+		this.userRepository.deleteById(id);
 	}
 
 }

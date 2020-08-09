@@ -23,6 +23,7 @@ export class JwtInterceptor implements HttpInterceptor {
     const isLoggedIn = currentUser && currentUser.token;
     const isApiUrl = request.url.startsWith(environment.apiUrl);
     if (isLoggedIn && isApiUrl) {
+      console.log("logado");
       request = request.clone({
         setHeaders: {
           "Content-Type": "application/json; charset=utf-8",
@@ -30,7 +31,7 @@ export class JwtInterceptor implements HttpInterceptor {
           Authorization: `${currentUser.token}`,
         },
       });
-      console.log(`req ---> `, request);
+      // console.log(`req ---> `, request);
     }
 
     return next.handle(request);

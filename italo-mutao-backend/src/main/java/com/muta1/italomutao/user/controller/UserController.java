@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.muta1.italomutao.user.dto.UserDTO;
@@ -24,22 +25,29 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping()
-	public List<UserDTO> getAllUsers() {
-		return this.userService.getAllUsers();
+	public List<UserDTO> getAllUsers() {	
+		return UserDTO.toDTOList(this.userService.getAllUsers());
 	}
 
-	@PostMapping()
+	@GetMapping(path = "/read")
+	public UserDTO getUser(@RequestParam(name = "id") Long userId) {
+		return UserDTO.toDTO(this.userService.getUser(userId));
+	}
+
+	@PostMapping(path = "/create")
 	public UserDTO postUser(@RequestBody UserDTO user) {
-		return this.userService.createUser(user);
+		System.out.println("[USERRR]");
+		System.out.println(user);
+		return UserDTO.toDTO(this.userService.createUser(UserDTO.toEntity(user)));
 	}
 
-	@PutMapping()
+	@PutMapping(path = "/update")
 	public UserDTO putUser(@RequestBody UserDTO user) {
-		return this.userService.updateUser(user);
+		return UserDTO.toDTO(this.userService.updateUser(UserDTO.toEntity(user)));
 	}
 
-	@DeleteMapping()
-	public void deleteUser(@RequestBody UserDTO user) {
-		this.userService.removeUser(user);
+	@DeleteMapping(path = "/delete")
+	public void deleteUser(@RequestParam(name = "id") Long userId) {
+		this.userService.removeUser(userId);
 	}
 }
