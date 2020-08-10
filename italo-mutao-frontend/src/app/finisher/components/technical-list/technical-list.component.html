@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <h1 class="display-6">
+        Parecer Técnico
+      </h1>
+      <!-- No data message -->
+      <p
+        *ngIf="technicalOpinionsActualUser?.length <= 0"
+        class="no-data text-center"
+      >
+        Nenhum parecer técnico pendente no momento!
+      </p>
+
+      <!-- Employee list -->
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          *ngIf="technicalOpinionsActualUser?.length > 0"
+        >
+          <thead class="table-success info-color">
+            <tr>
+              <th scope="col">Processo</th>
+              <th scope="col">Parecer Técnico</th>
+              <th scope="col">Pendente</th>
+              <th scope="col">Alterar Parecer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let to of technicalOpinionsActualUser; let i = index">
+              <th scope="row">{{ to.process?.name }}</th>
+              <td>
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea2"
+                    >Clique aqui inserir parecer</label
+                  >
+                  <textarea
+                    class="form-control rounded-0"
+                    id="exampleFormControlTextarea2"
+                    rows="2"
+                    [(ngModel)]="to.technicalOpinion"
+                    >{{ to.technicalOpinion || "Não informado" }}
+                    </textarea
+                  >
+                </div>
+              </td>
+              <td>
+                <strong>{{
+                  to.hasTechnicalOpinionPending ? "Sim" : "Não"
+                }}</strong>
+              </td>
+              <td class="text-center edit-block">
+                <span class="edit">
+                  <button
+                    (click)="saveTechnicalOpinion(to)"
+                    type="button"
+                    class="btn btn-success btn-sm"
+                  >
+                    Finalizar
+                  </button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

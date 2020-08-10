@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+  <div class="col-md-6 register-employee">
+    <!-- form card register -->
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="inputName">Nome</label>
+          <input class="form-control" type="text" formControlName="name" />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.name.errors?.required"
+          >
+            Nome é obrigatório.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail3">Senha</label>
+          <input
+            class="form-control"
+            type="password"
+            formControlName="password"
+          />
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.password.errors?.required"
+          >
+            Insira uma senha.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPassword3">Função</label>
+          <select
+            class="custom-select form-control"
+            (change)="updateProfile($event.target.value)"
+            formControlName="role"
+          >
+            <option value="">Escolha...</option>
+            <option *ngFor="let role of roles" value="{{ role }}"
+              >{{ translator(role) }}
+            </option>
+          </select>
+          <!-- error -->
+          <div
+            class="invalid-feedback"
+            *ngIf="submitted && myForm.role.errors?.required"
+          >
+            Escolha uma função.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button
+            [disabled]="!userForm.valid"
+            class="btn btn-success btn-lg btn-block"
+            type="submit"
+          >
+            Enviar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- form card register -->
+</div>
