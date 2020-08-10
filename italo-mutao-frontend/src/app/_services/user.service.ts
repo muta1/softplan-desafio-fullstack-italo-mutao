@@ -36,7 +36,6 @@ export class UserService {
         let users = data.response.filter(
           (user) => user.id != this.auth.currentUserValue.id
         );
-        console.log("data={}}}", data);
         return users || [];
       })
     );
