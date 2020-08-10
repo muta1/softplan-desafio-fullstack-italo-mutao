@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+  <div class="col-md-6 register-employee">
+    <!-- form card register -->
+    <div class="card card-outline-secondary">
+      <div class="card-header">
+        <h3 class="mb-0">Edit Employee</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="inputName">Name</label>
+            <input class="form-control" type="text" formControlName="name" />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.name.errors?.required"
+            >
+              Name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3">Senha</label>
+            <input
+              class="form-control"
+              type="password"
+              formControlName="password"
+            />
+            <!-- error -->
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.password.errors?.required"
+            >
+              Senha é obrigatória.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputPassword3">Função</label>
+            <select
+              class="custom-select form-control"
+              (change)="updateProfile($event.target.value)"
+              formControlName="role"
+            >
+              <option value="">Escolha...</option>
+              <option *ngFor="let role of roles" value="{{ role }}"
+                >{{ translator(role) }}
+              </option>
+            </select>
+            <!-- error -->
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && myForm.role.errors?.required"
+            >
+              Escolha uma função.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button
+              [disabled]="!editForm.valid"
+              class="btn btn-success btn-lg btn-block"
+              type="submit"
+            >
+              Atualizar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- form  -->
+  </div>
+</div>

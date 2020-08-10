@@ -1,0 +1,21 @@
+﻿<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+  <div class="navbar-nav">
+    <a class="nav-item nav-link" routerLink="/">Início</a>
+    <a class="nav-item nav-link" routerLink="/admin" *ngIf="isAdmin"
+      >Gerenciar Usuários
+    </a>
+    <a class="nav-item nav-link" routerLink="/screening" *ngIf="isScreening"
+      >Realizar Triagem</a
+    >
+    <a class="nav-item nav-link" routerLink="/finisher" *ngIf="isFinisher"
+      >Finalizar Processos</a
+    >
+    <a class="nav-item nav-link" (click)="logout()">Sair</a>
+  </div>
+</nav>
+
+<!-- main app container -->
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
