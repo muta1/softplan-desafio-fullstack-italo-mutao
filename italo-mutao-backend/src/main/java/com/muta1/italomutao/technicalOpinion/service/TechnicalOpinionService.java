@@ -54,8 +54,8 @@ public class TechnicalOpinionService {
 		}
 
 		TechnicalOpinion technicalOpinionFromDb = technicalOpinionRepository.getOne(technicalOpinion.getId());
-		// crush the variables of the object found
-		technicalOpinionFromDb.setHasTechnicalOpinionPending(true);
+		// crush the variables of the object found		
+		technicalOpinionFromDb.setHasTechnicalOpinionPending(false);
 		technicalOpinionFromDb.setTechnicalOpinion(technicalOpinion.getTechnicalOpinion());
 
 		return technicalOpinionRepository.save(technicalOpinionFromDb);

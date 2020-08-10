@@ -26,7 +26,7 @@ export class UserListComponent implements OnInit {
 
   readUser() {
     this.apiService.getUsers().subscribe((data) => {
-      this.users = data.response;
+      this.users = data;
     });
   }
 
@@ -38,19 +38,16 @@ export class UserListComponent implements OnInit {
         {
           text: "Sim",
           handler: async () => {
+            console.log("deletando usuário");
             const loading = await this.loading.create({ spinner: "circles" });
             await loading.present();
-            this.apiService.deleteUser(user.id).subscribe(
-              async (_) => {
-                await loading.dismiss();
-                console.log("user deleted");
-                console.log(user);
-                this.users.splice(index, 1);
-              },
-              async (_) => {
-                await loading.dismiss();
-              }
-            );
+            let deletedUser = await this.apiService
+              .deleteUser(user.id)
+              .toPromise();
+            console.log("deletedUser: ", deletedUser);
+
+            this.users.splice(index, 1);
+            await loading.dismiss();
           },
         },
         {

@@ -22,7 +22,8 @@ export class TechnicalOpinionService {
   }
   // Update TechnicalOpinion GiveOpinion
   updateTechnicalOpinion(data: TechnicalOpinion): Observable<any> {
-    let url = `${this.baseUri}/update`;
+    console.log(`TechnicalOpinion: `, data);
+    let url = `${this.baseUri}/giveopinion`;
     return this.http
       .put(url, data /*, { headers: this.headers }*/)
       .pipe(catchError(this.errorMgmt));
@@ -52,7 +53,11 @@ export class TechnicalOpinionService {
       )
       .pipe(
         map((res) => {
-          return res.response || {};
+          let toWithoutTechinicalOpinion = res.response.filter(
+            (to) => to.hasTechnicalOpinionPending
+          );
+
+          return toWithoutTechinicalOpinion || {};
         }),
         catchError(this.errorMgmt)
       );

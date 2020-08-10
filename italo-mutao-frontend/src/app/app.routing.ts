@@ -15,6 +15,8 @@ import { ProcessListComponent } from "./screening/components/process-list/proces
 import { ProcessEditComponent } from "./screening/components/process-edit/process-edit.component";
 import { ProcessCreateComponent } from "./screening/components/process-create/process-create.component";
 
+import { TechnicalListComponent } from "./finisher/components/technical-list/technical-list.component";
+
 const routes: Routes = [
   {
     path: "",
@@ -72,6 +74,11 @@ const routes: Routes = [
     path: "finisher",
     component: FinisherComponent,
     canActivate: [AuthGuard],
+    data: { roles: [Role.Finisher] },
+  },
+  {
+    path: "technical-list",
+    component: TechnicalListComponent,
     data: { roles: [Role.Finisher] },
   },
   {

@@ -36,7 +36,7 @@ export class HomeComponent {
       .pipe(first())
       .subscribe((api) => {
         this.loading = false;
-        this.users = api.response;
+        this.users = api;
         console.log(this.users);
 
         // this.userFromApi = user;

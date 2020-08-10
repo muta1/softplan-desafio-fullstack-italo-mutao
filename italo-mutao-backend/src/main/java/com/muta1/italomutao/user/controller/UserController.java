@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.muta1.italomutao.api.ApiResponse;
+import com.muta1.italomutao.technicalOpinion.dto.TechnicalOpinionDTO;
 import com.muta1.italomutao.user.dto.UserDTO;
 import com.muta1.italomutao.user.service.UserService;
 
@@ -57,7 +58,9 @@ public class UserController {
 
 	@DeleteMapping(path = "/delete")
 	public ApiResponse<Boolean> deleteUser(@RequestParam(name = "id") Long userId) {
-		ApiResponse<Boolean> ret = new ApiResponse<Boolean>();	
+		ApiResponse<Boolean> ret = new ApiResponse<Boolean>();
+		this.userService.removeUser(userId);
+		ret.setResponse(true);
 		return ret;
 	}
 }

@@ -17,7 +17,7 @@ export class UserService {
   private method: string = "/user";
   private baseUri: string = environment.apiUrl + this.method;
   private headers = new HttpHeaders().set("Content-Type", "application/json");
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthenticationService) {}
 
   // Create
   createUser(user: User): Observable<any> {
@@ -31,7 +31,15 @@ export class UserService {
 
   // Get all Users
   getUsers() {
-    return this.http.get<ApiResponse<User[]>>(`${this.baseUri}`);
+    return this.http.get<ApiResponse<User[]>>(`${this.baseUri}`).pipe(
+      map((data) => {
+        let users = data.response.filter(
+          (user) => user.id != this.auth.currentUserValue.id
+        );
+        console.log("data={}}}", data);
+        return users || [];
+      })
+    );
   }
 
   // Get Finisher Users
@@ -81,6 +89,7 @@ export class UserService {
 
   // Delete User
   deleteUser(id): Observable<any> {
+    console.log("id: ", id);
     let url = `${this.baseUri}/delete?id=${id}`;
     return this.http
       .delete(url /*, { headers: this.headers }*/)

@@ -12,7 +12,7 @@ import { ToastController } from "@ionic/angular";
 export class UserEditComponent implements OnInit {
   submitted = false;
   editForm: FormGroup;
-  employeeData: User[];
+
   public roles: Role[] = [Role.Admin, Role.Screening, Role.Finisher];
 
   constructor(
@@ -24,9 +24,9 @@ export class UserEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.updateEmployee();
+    this.updateUser();
     let id = this.actRoute.snapshot.paramMap.get("id");
-    this.getEmployee(id);
+    this.getUser(id);
     this.editForm = this.fb.group({
       name: ["", [Validators.required]],
       password: ["", [Validators.required]],
@@ -50,7 +50,7 @@ export class UserEditComponent implements OnInit {
     return this.editForm.controls;
   }
 
-  getEmployee(id) {
+  getUser(id) {
     this.apiService.getUser(id).subscribe((data) => {
       console.log("Edit: ", data);
       this.editForm.setValue({
@@ -61,7 +61,7 @@ export class UserEditComponent implements OnInit {
     });
   }
 
-  updateEmployee() {
+  updateUser() {
     this.editForm = this.fb.group({
       name: ["", [Validators.required]],
       password: ["", [Validators.required]],
