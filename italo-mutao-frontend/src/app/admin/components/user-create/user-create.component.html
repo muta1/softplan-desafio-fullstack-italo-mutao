@@ -40,7 +40,7 @@
           >
             <option value="">Escolha...</option>
             <option *ngFor="let role of roles" value="{{ role }}"
-              >{{ role }}
+              >{{ translator(role) }}
             </option>
           </select>
           <!-- error -->

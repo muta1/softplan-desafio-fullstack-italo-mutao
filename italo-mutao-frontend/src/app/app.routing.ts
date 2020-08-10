@@ -1,4 +1,5 @@
-﻿import { Routes, RouterModule } from "@angular/router";
+﻿import { ProcessTechnicalOpinionComponent } from "./screening/components/process-technical-opinion/process-technical-opinion.component";
+import { Routes, RouterModule } from "@angular/router";
 
 import { HomeComponent } from "./home";
 import { AdminComponent } from "./admin";
@@ -10,6 +11,9 @@ import { FinisherComponent } from "./finisher";
 import { UserCreateComponent } from "./admin/components/user-create/user-create.component";
 import { UserEditComponent } from "./admin/components/user-edit/user-edit.component";
 import { UserListComponent } from "./admin/components/user-list/user-list.component";
+import { ProcessListComponent } from "./screening/components/process-list/process-list.component";
+import { ProcessEditComponent } from "./screening/components/process-edit/process-edit.component";
+import { ProcessCreateComponent } from "./screening/components/process-create/process-create.component";
 
 const routes: Routes = [
   {
@@ -44,7 +48,26 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: [Role.Screening] },
   },
-
+  {
+    path: "process-create",
+    component: ProcessCreateComponent,
+    data: { roles: [Role.Screening] },
+  },
+  {
+    path: "process-edit/:id",
+    component: ProcessEditComponent,
+    data: { roles: [Role.Screening] },
+  },
+  {
+    path: "process-list",
+    component: ProcessListComponent,
+    data: { roles: [Role.Screening] },
+  },
+  {
+    path: "process-technical-opinion/:id",
+    component: ProcessTechnicalOpinionComponent,
+    data: { roles: [Role.Screening] },
+  },
   {
     path: "finisher",
     component: FinisherComponent,

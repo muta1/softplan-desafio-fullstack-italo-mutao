@@ -1,47 +1,33 @@
 import { Component, OnInit } from "@angular/core";
+import { Process } from "@app/_models";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { User, Role, RoleTranslator } from "@app/_models";
 import { ActivatedRoute, Router } from "@angular/router";
-import { UserService } from "@app/_services";
+import { ProcessService } from "@app/_services/process.service";
 import { ToastController } from "@ionic/angular";
 
 @Component({
-  selector: "app-user-edit",
-  templateUrl: "./user-edit.component.html",
+  selector: "app-process-edit",
+  templateUrl: "./process-edit.component.html",
 })
-export class UserEditComponent implements OnInit {
+export class ProcessEditComponent implements OnInit {
   submitted = false;
   editForm: FormGroup;
-  employeeData: User[];
-  public roles: Role[] = [Role.Admin, Role.Screening, Role.Finisher];
+  employeeData: Process[];
 
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
-    private apiService: UserService,
+    private apiService: ProcessService,
     private router: Router,
     private toast: ToastController
   ) {}
 
   ngOnInit() {
-    this.updateEmployee();
+    this.updateProcess();
     let id = this.actRoute.snapshot.paramMap.get("id");
     this.getEmployee(id);
     this.editForm = this.fb.group({
       name: ["", [Validators.required]],
-      password: ["", [Validators.required]],
-      role: ["", [Validators.required]],
-    });
-  }
-
-  translator(role: string): string {
-    return RoleTranslator.translate(role);
-  }
-
-  // Choose options with select-dropdown
-  updateProfile(e) {
-    this.editForm.get("role").setValue(e, {
-      onlySelf: true,
     });
   }
 
@@ -51,21 +37,17 @@ export class UserEditComponent implements OnInit {
   }
 
   getEmployee(id) {
-    this.apiService.getUser(id).subscribe((data) => {
+    this.apiService.getProcess(id).subscribe((data) => {
       console.log("Edit: ", data);
       this.editForm.setValue({
         name: data["name"],
-        password: data["password"],
-        role: data["role"],
       });
     });
   }
 
-  updateEmployee() {
+  updateProcess() {
     this.editForm = this.fb.group({
       name: ["", [Validators.required]],
-      password: ["", [Validators.required]],
-      role: ["", [Validators.required]],
     });
   }
 
@@ -76,12 +58,12 @@ export class UserEditComponent implements OnInit {
     } else {
       let id = this.actRoute.snapshot.paramMap.get("id");
       this.editForm.value.id = id;
-      this.apiService.updateUser(this.editForm.value).subscribe(
+      this.apiService.updateProcess(this.editForm.value).subscribe(
         async (res) => {
           console.log("res ===> ", res);
-          this.router.navigateByUrl("/user-list");
+          this.router.navigateByUrl("/process-list");
           let toast = await this.toast.create({
-            message: "Usuário atualizado com sucesso!",
+            message: "Processo atualizado com sucesso!",
             duration: 3000,
           });
           await toast.present();

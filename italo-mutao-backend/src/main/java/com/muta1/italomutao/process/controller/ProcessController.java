@@ -53,9 +53,9 @@ public class ProcessController {
 	}
 
 	@DeleteMapping(path = "delete")
-	public ApiResponse<Boolean> deleteProcess(@RequestBody Long id) {
+	public ApiResponse<Boolean> deleteProcess(@RequestParam(name = "id") Long processId) {
 		ApiResponse<Boolean> ret = new ApiResponse<>();
-		this.processService.removeProcess(id);
+		this.processService.removeProcess(processId);
 		ret.setResponse(true);
 		return ret;
 	}

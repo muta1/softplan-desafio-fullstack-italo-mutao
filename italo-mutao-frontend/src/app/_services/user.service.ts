@@ -7,7 +7,7 @@ import {
 } from "@angular/common/http";
 
 import { environment } from "@environments/environment";
-import { User, ApiResponse } from "@app/_models";
+import { User, ApiResponse, Role, TechnicalOpinion } from "@app/_models";
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { AuthenticationService } from "./authentication.service";
@@ -17,10 +17,7 @@ export class UserService {
   private method: string = "/user";
   private baseUri: string = environment.apiUrl + this.method;
   private headers = new HttpHeaders().set("Content-Type", "application/json");
-  constructor(
-    private http: HttpClient,
-    private authenticationService: AuthenticationService
-  ) {}
+  constructor(private http: HttpClient) {}
 
   // Create
   createUser(user: User): Observable<any> {
@@ -35,6 +32,30 @@ export class UserService {
   // Get all Users
   getUsers() {
     return this.http.get<ApiResponse<User[]>>(`${this.baseUri}`);
+  }
+
+  // Get Finisher Users
+  getOtherFinisherUsers(techOpinionArr: TechnicalOpinion[]) {
+    return this.http.get<User[]>(`${this.baseUri}`).pipe(
+      map((users: any) => {
+        if (users.response) {
+          const alreadyInProcessUsers: User[] = techOpinionArr.map(
+            (to) => to.user
+          );
+          const allFinishers: User[] = users.response.filter(
+            (user) => user.role === Role.Finisher
+          );
+          const otherFinisherUsers: User[] = allFinishers.filter(
+            (e) => !alreadyInProcessUsers.some((user) => user.name === e.name)
+          );
+
+          return otherFinisherUsers;
+        } else {
+          return [];
+        }
+      }),
+      catchError(this.errorMgmt)
+    );
   }
 
   // Get User

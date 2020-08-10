@@ -1,7 +1,11 @@
-﻿<div class="col-md-6 offset-md-3 mt-5">
+﻿<div class="col-md-7 offset-md-3 mt-5 overflow-auto">
   <div class="alert alert-info">
-    <strong>Normal User</strong> - U: user P: user<br />
-    <strong>Administrator</strong> - U: admin P: admin
+    <header>Usuários para teste:</header>
+    <ul>
+      <li><strong>Administrador</strong> - U: italo P: italo</li>
+      <li><strong>Usuário-triador</strong> - U: david P: italo<br /></li>
+      <li><strong>Usuário-finalizador</strong> - U: mutao P: italo<br /></li>
+    </ul>
   </div>
   <div class="card">
     <h4 class="card-header">Angular 8 Role Based Auth Example</h4>
@@ -16,11 +20,11 @@
             [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
           />
           <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-            <div *ngIf="f.name.errors.required">Name is required</div>
+            <div *ngIf="f.name.errors.required">Nome é obrigatório</div>
           </div>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Senha</label>
           <input
             type="password"
             formControlName="password"
@@ -28,7 +32,7 @@
             [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
           />
           <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.required">Senha é obrigatória</div>
           </div>
         </div>
         <button [disabled]="loading" class="btn btn-primary">

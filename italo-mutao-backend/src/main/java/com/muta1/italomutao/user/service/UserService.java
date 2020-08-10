@@ -41,13 +41,18 @@ public class UserService {
 		if (user.getId() == null) {
 			throw new FormException("id", "Update user fail, id must not be null.");
 		}
-
-		User userFromDb = userRepository.getOne(user.getId());
-		// crush the variables of the object found
+		
+		// verify password
+		
+		User userFromDb = userRepository.getOne(user.getId());		
 		userFromDb.setName(user.getName());
-		userFromDb.setPassword(user.getPassword());
+		// compare passwords to encrypt
+		if(userFromDb.getPassword().equals(user.getPassword())) {
+			userFromDb.setPassword(user.getPassword());
+		}else {			
+			userFromDb.setPassword(User.PASSWORD_ENCODER.encode(user.getPassword()));
+		}
 		userFromDb.setRole(user.getRole());
-
 		return userRepository.save(userFromDb);
 	}
 

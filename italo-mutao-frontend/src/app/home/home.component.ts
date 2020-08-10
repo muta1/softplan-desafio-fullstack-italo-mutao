@@ -1,4 +1,5 @@
-﻿import { Component } from "@angular/core";
+﻿import { RoleTranslator } from "./../_models/role";
+import { Component } from "@angular/core";
 import { first } from "rxjs/operators";
 
 import { User } from "@app/_models";
@@ -12,11 +13,16 @@ export class HomeComponent {
 
   users: User[];
 
+  translatedRole: string;
+
   constructor(
     private userService: UserService,
     private authenticationService: AuthenticationService
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
+    this.translatedRole = RoleTranslator.translate(
+      this.authenticationService.currentUserValue.role
+    );
   }
 
   ngOnInit() {

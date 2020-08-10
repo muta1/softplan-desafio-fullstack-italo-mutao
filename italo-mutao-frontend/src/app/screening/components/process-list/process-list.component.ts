@@ -1,51 +1,46 @@
 import { Component, OnInit } from "@angular/core";
-import { UserService } from "@app/_services";
+import { ProcessService } from "@app/_services/process.service";
 import { AlertController, LoadingController } from "@ionic/angular";
-import { RoleTranslator } from "@app/_models";
 
 @Component({
-  selector: "app-user-list",
-  templateUrl: "./user-list.component.html",
+  selector: "app-process-list",
+  templateUrl: "./process-list.component.html",
 })
-export class UserListComponent implements OnInit {
-  users: any = [];
+export class ProcessListComponent implements OnInit {
+  processes: any = [];
 
   constructor(
-    private apiService: UserService,
+    private apiService: ProcessService,
     private alert: AlertController,
     private loading: LoadingController
   ) {
-    this.readUser();
+    this.readProcesses();
   }
 
   ngOnInit() {}
 
-  translator(role: string): string {
-    return RoleTranslator.translate(role);
-  }
-
-  readUser() {
-    this.apiService.getUsers().subscribe((data) => {
-      this.users = data.response;
+  readProcesses() {
+    this.apiService.getProcesses().subscribe((data) => {
+      this.processes = data.response;
     });
   }
 
-  async removeUser(user, index) {
+  async removeUser(process, index) {
     let alert = await this.alert.create({
       header: "Aviso",
-      message: `Deseja realmente remover usuário: ${user.name} ?`,
+      message: `Deseja realmente remover processo: ${process.name} ?`,
       buttons: [
         {
           text: "Sim",
           handler: async () => {
             const loading = await this.loading.create({ spinner: "circles" });
             await loading.present();
-            this.apiService.deleteUser(user.id).subscribe(
+            this.apiService.deleteProcess(process.id).subscribe(
               async (_) => {
                 await loading.dismiss();
-                console.log("user deleted");
-                console.log(user);
-                this.users.splice(index, 1);
+                console.log("process deleted");
+                console.log(process);
+                this.processes.splice(index, 1);
               },
               async (_) => {
                 await loading.dismiss();

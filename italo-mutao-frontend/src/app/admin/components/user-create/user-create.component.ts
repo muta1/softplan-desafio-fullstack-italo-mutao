@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone } from "@angular/core";
-import { User, Role } from "@app/_models";
+import { User, Role, RoleTranslator } from "@app/_models";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserService } from "@app/_services";
@@ -24,6 +24,10 @@ export class UserCreateComponent implements OnInit {
     private userService: UserService
   ) {
     this.mainForm();
+  }
+
+  translator(role: string): string {
+    return RoleTranslator.translate(role);
   }
 
   ngOnInit() {
@@ -67,7 +71,7 @@ export class UserCreateComponent implements OnInit {
       this.userService.createUser(this.userForm.value).subscribe(
         (res) => {
           console.log("User successfully created!");
-          this.ngZone.run(() => this.router.navigateByUrl("/employees-list"));
+          this.ngZone.run(() => this.router.navigateByUrl("/user-list"));
         },
         (error) => {
           console.log(error);
