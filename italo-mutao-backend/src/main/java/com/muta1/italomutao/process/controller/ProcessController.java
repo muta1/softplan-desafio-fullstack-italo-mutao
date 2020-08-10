@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.muta1.italomutao.api.ApiResponse;
 import com.muta1.italomutao.process.dto.ProcessDTO;
 import com.muta1.italomutao.process.service.ProcessService;
 
@@ -24,28 +25,39 @@ public class ProcessController {
 	private ProcessService processService;
 
 	@GetMapping()
-	public List<ProcessDTO> getProcesses() {
-		return ProcessDTO.toDTOList(processService.getAllProcesses());
+	public ApiResponse<List<ProcessDTO>> getProcesses() {
+		ApiResponse<List<ProcessDTO>> ret = new ApiResponse<>();
+		ret.setResponse(ProcessDTO.toDTOList(processService.getAllProcesses()));
+		return ret;
 	}
 
 	@GetMapping(path = "read")
-	public ProcessDTO getProcess(@RequestParam Long id) {
-		return ProcessDTO.toDTO(processService.getProcess(id));
+	public ApiResponse<ProcessDTO> getProcess(@RequestParam Long id) {
+		ApiResponse<ProcessDTO> ret = new ApiResponse<>();
+		ret.setResponse(ProcessDTO.toDTO(processService.getProcess(id)));
+		return ret;
 	}
 
 	@PostMapping(path = "create")
-	public ProcessDTO postProcess(@RequestBody ProcessDTO process) {
-		return ProcessDTO.toDTO(this.processService.createProcess(ProcessDTO.toEntity(process)));
+	public ApiResponse<ProcessDTO> postProcess(@RequestBody ProcessDTO process) {
+		ApiResponse<ProcessDTO> ret = new ApiResponse<>();
+		ret.setResponse(ProcessDTO.toDTO(this.processService.createProcess(ProcessDTO.toEntity(process))));
+		return ret;
 	}
 
 	@PutMapping(path = "update")
-	public ProcessDTO putProcess(@RequestBody ProcessDTO process) {
-		return ProcessDTO.toDTO(this.processService.updateProcess(ProcessDTO.toEntity(process)));
+	public ApiResponse<ProcessDTO> putProcess(@RequestBody ProcessDTO process) {
+		ApiResponse<ProcessDTO> ret = new ApiResponse<>();
+		ret.setResponse(ProcessDTO.toDTO(this.processService.updateProcess(ProcessDTO.toEntity(process))));
+		return ret;
 	}
 
 	@DeleteMapping(path = "delete")
-	public void deleteProcess(@RequestBody Long id) {
+	public ApiResponse<Boolean> deleteProcess(@RequestBody Long id) {
+		ApiResponse<Boolean> ret = new ApiResponse<>();
 		this.processService.removeProcess(id);
+		ret.setResponse(true);
+		return ret;
 	}
 
 }

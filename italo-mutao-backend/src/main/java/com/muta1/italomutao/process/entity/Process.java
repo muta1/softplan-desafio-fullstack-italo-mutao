@@ -21,8 +21,5 @@ public class Process {
 	private Long id;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "technical_opinion")
-	private String technicalOpinion;
-	@Column(name = "has_technical_opinion_pending")
-	private Boolean hasTechnicalOpinionPending;
+	
 }

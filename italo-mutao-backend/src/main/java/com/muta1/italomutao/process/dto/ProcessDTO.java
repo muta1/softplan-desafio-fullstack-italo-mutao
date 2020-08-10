@@ -16,25 +16,18 @@ public class ProcessDTO {
 
 	private String name;
 
-	private String technicalOpinion;
-
-	private Boolean hasTechnicalOpinionPending;
-
 	public static Process toEntity(ProcessDTO processDto) {
 		Process process = new Process();
 
-		process.setId(processDto.getId()).setName(processDto.getName())
-				.setHasTechnicalOpinionPending(processDto.getHasTechnicalOpinionPending())
-				.setTechnicalOpinion(processDto.getTechnicalOpinion());
+		process.setId(processDto.getId()).setName(processDto.getName());
 
 		return process;
 	}
 
 	public static ProcessDTO toDTO(Process processEntity) {
 		ProcessDTO processDto = new ProcessDTO();
-		processDto.setId(processEntity.getId()).setName(processEntity.getName())
-				.setHasTechnicalOpinionPending(processEntity.getHasTechnicalOpinionPending())
-				.setTechnicalOpinion(processEntity.getTechnicalOpinion());
+		processDto.setId(processEntity.getId()).setName(processEntity.getName());	
+
 		return processDto;
 	}
 

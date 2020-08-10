@@ -5,12 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.muta1.italomutao.exception.CodeException;
-import com.muta1.italomutao.exception.ExceptionValidation;
-import com.muta1.italomutao.exception.ServiceException;
-import com.muta1.italomutao.process.dto.ProcessDTO;
-import com.muta1.italomutao.process.repository.ProcessRepository;
+import com.muta1.italomutao.exception.FormException;
+import com.muta1.italomutao.exception.ValidationException;
 import com.muta1.italomutao.process.entity.Process;
+import com.muta1.italomutao.process.repository.ProcessRepository;
 
 @Service
 public class ProcessService {
@@ -26,10 +24,9 @@ public class ProcessService {
 		return this.processRepository.getOne(id);
 	}
 
-	public Process createProcess(Process process) throws ExceptionValidation, ServiceException {
+	public Process createProcess(Process process)  {
 		if (process == null) {
-			throw new ServiceException("Impossible to create a new process, process must not be null.",
-					CodeException.GENERAL);
+			throw new ValidationException("Impossible to create a new process, process must not be null.");
 		}
 
 		return this.processRepository.save(process);
@@ -37,24 +34,22 @@ public class ProcessService {
 
 	public Process updateProcess(Process process) {
 		if (process == null) {
-			throw new ServiceException("Update process fail, process must not be null.", CodeException.GENERAL);
+			throw new ValidationException("Update process fail, process must not be null.");
 		}
 
 		if (process.getId() == null) {
-			throw new ExceptionValidation("id", "Update process fail, id must not be null.");
+			throw new FormException("id", "Update process fail, id must not be null.");
 		}
 
 		Process processFromDb = processRepository.getOne(process.getId());
 		processFromDb.setName(process.getName());
-		processFromDb.setTechnicalOpinion(process.getTechnicalOpinion());
-		processFromDb.setHasTechnicalOpinionPending(process.getHasTechnicalOpinionPending());
-
+	
 		return processRepository.save(processFromDb);
 	}
 
 	public void removeProcess(Long id) {
 		if (id == null) {
-			throw new ServiceException("Delete process fail, id must not be null.", CodeException.GENERAL);
+			throw new ValidationException("Delete process fail, id must not be null.");
 		}
 
 		this.processRepository.deleteById(id);

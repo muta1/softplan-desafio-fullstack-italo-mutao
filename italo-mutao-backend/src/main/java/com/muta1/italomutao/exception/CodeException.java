@@ -1,22 +1,20 @@
 package com.muta1.italomutao.exception;
 
 public enum CodeException {
-	GENERAL("SERVER ERROR", 1001), VALIDATION_FAIL("Validation Failure", 1002),
-	BAD_CREDENTIALS("Invalid Credentials", 1003);
+	GENERAL("SERVER ERROR"), 
+	FORM_FAIL("Form Validation Failure"),
+	VALIDATION_FAIL("Validation Failure"),
+	BUSINESS_FAIL("Business Failure"),
+	BAD_CREDENTIALS("Invalid Credentials");
 
 	private final String description;
-	private final Integer code;
 
-	private CodeException(String description, Integer code) {
+	private CodeException(String description) {
 		this.description = description;
-		this.code = code;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
-	public Integer getCode() {
-		return code;
-	}
 }

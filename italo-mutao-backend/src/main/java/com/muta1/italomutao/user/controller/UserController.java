@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.muta1.italomutao.api.ApiResponse;
+import com.muta1.italomutao.technicalOpinion.dto.TechnicalOpinionDTO;
 import com.muta1.italomutao.user.dto.UserDTO;
 import com.muta1.italomutao.user.service.UserService;
 
@@ -25,29 +27,40 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping()
-	public List<UserDTO> getAllUsers() {	
-		return UserDTO.toDTOList(this.userService.getAllUsers());
+	public ApiResponse<List<UserDTO>> getAllUsers() {
+		ApiResponse<List<UserDTO>> ret = new ApiResponse<>();
+		ret.setResponse(UserDTO.toDTOList(this.userService.getAllUsers()));
+		return ret;
 	}
 
 	@GetMapping(path = "/read")
-	public UserDTO getUser(@RequestParam(name = "id") Long userId) {
-		return UserDTO.toDTO(this.userService.getUser(userId));
+	public ApiResponse<UserDTO> getUser(@RequestParam(name = "id") Long userId) {
+		ApiResponse<UserDTO> ret = new ApiResponse<>();
+		ret.setResponse(UserDTO.toDTO(this.userService.getUser(userId)));
+		return ret;
 	}
 
 	@PostMapping(path = "/create")
-	public UserDTO postUser(@RequestBody UserDTO user) {
+	public ApiResponse<UserDTO> postUser(@RequestBody UserDTO user) {
 		System.out.println("[USERRR]");
 		System.out.println(user);
-		return UserDTO.toDTO(this.userService.createUser(UserDTO.toEntity(user)));
+		ApiResponse<UserDTO> ret = new ApiResponse<>();
+		ret.setResponse(UserDTO.toDTO(this.userService.createUser(UserDTO.toEntity(user))));
+		return ret;
 	}
 
 	@PutMapping(path = "/update")
-	public UserDTO putUser(@RequestBody UserDTO user) {
-		return UserDTO.toDTO(this.userService.updateUser(UserDTO.toEntity(user)));
+	public ApiResponse<UserDTO> putUser(@RequestBody UserDTO user) {
+		ApiResponse<UserDTO> ret = new ApiResponse<>();
+		ret.setResponse(UserDTO.toDTO(this.userService.updateUser(UserDTO.toEntity(user))));
+		return ret;
 	}
 
 	@DeleteMapping(path = "/delete")
-	public void deleteUser(@RequestParam(name = "id") Long userId) {
+	public ApiResponse<Boolean> deleteUser(@RequestParam(name = "id") Long userId) {
+		ApiResponse<Boolean> ret = new ApiResponse<Boolean>();
 		this.userService.removeUser(userId);
+		ret.setResponse(true);
+		return ret;
 	}
 }
