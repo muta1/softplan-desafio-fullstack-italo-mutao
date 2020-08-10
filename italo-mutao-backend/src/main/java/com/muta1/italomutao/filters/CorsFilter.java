@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CorsFilter implements Filter {
 
-	private final List<String> allowedOrigins = Arrays.asList("http://localhost:4200", "http://localhost:8080", "*");
+	private final List<String> allowedOrigins = Arrays.asList("http://localhost:4200", "http://localhost:8080", "http://softplan-italo.s3-website-sa-east-1.amazonaws.com", "*");
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
