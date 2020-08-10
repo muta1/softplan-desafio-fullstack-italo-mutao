@@ -27,12 +27,16 @@
             <tr>
               <th scope="col">ID Usuário</th>
               <th scope="col">Usuário Finalizador</th>
+              <th scope="col">Parecer Técnico</th>
+              <th scope="col">Pendente</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let to of technicalOpinions; let i = index">
               <th scope="row">{{ to.user?.id }}</th>
               <td>{{ to.user?.name }}</td>
+              <td>{{ to.technicalOpinion || "Não informado." }}</td>
+              <td>{{ to.hasTechnicalOpinionPending ? "Sim" : "Não" }}</td>
             </tr>
           </tbody>
         </table>
