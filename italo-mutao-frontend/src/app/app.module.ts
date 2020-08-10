@@ -12,7 +12,9 @@ import { AdminComponent } from "./admin";
 import { LoginComponent } from "./login";
 import { ScreeningComponent } from "./screening";
 import { FinisherComponent } from "./finisher";
-
+import { UserCreateComponent } from "./admin/components/user-create/user-create.component";
+import { UserEditComponent } from "./admin/components/user-edit/user-edit.component";
+import { UserListComponent } from "./admin/components/user-list/user-list.component";
 @NgModule({
   imports: [
     BrowserModule,
@@ -27,6 +29,9 @@ import { FinisherComponent } from "./finisher";
     AdminComponent,
     ScreeningComponent,
     FinisherComponent,
+    UserCreateComponent,
+    UserEditComponent,
+    UserListComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

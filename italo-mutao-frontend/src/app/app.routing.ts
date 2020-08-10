@@ -7,6 +7,9 @@ import { AuthGuard } from "./_helpers";
 import { Role } from "./_models";
 import { ScreeningComponent } from "./screening";
 import { FinisherComponent } from "./finisher";
+import { UserCreateComponent } from "./admin/components/user-create/user-create.component";
+import { UserEditComponent } from "./admin/components/user-edit/user-edit.component";
+import { UserListComponent } from "./admin/components/user-list/user-list.component";
 
 const routes: Routes = [
   {
@@ -21,11 +24,27 @@ const routes: Routes = [
     data: { roles: [Role.Admin] },
   },
   {
+    path: "user-create",
+    component: UserCreateComponent,
+    data: { roles: [Role.Admin] },
+  },
+  {
+    path: "user-edit/:id",
+    component: UserEditComponent,
+    data: { roles: [Role.Admin] },
+  },
+  {
+    path: "user-list",
+    component: UserListComponent,
+    data: { roles: [Role.Admin] },
+  },
+  {
     path: "screening",
     component: ScreeningComponent,
     canActivate: [AuthGuard],
     data: { roles: [Role.Screening] },
   },
+
   {
     path: "finisher",
     component: FinisherComponent,

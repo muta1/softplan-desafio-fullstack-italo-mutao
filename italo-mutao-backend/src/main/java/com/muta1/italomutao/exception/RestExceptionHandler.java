@@ -43,7 +43,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<ApiResponse<String>>(response, HttpStatus.OK);
 	}
-		@ExceptionHandler(BadCredentialsException.class)
+
+	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<ApiResponse<String>> handleBadCredentialsException(
 			BadCredentialsException badCredentialsException) {
 		Map<String, String> errors = new HashMap<>();

@@ -1,6 +1,6 @@
 export interface ApiResponse<T> {
   // abstract return
-  errorCode: string;
+  success: boolean;
   errorMessage: string;
   errorTag: string;
   response: T;

@@ -39,17 +39,19 @@ export class UserService {
 
   // Get User
   getUser(id): Observable<any> {
-    let url = `${this.baseUri}/read/${id}`;
-    return this.http.get(url /*, { headers: this.headers }*/).pipe(
-      map((res: Response) => {
-        return res || {};
-      }),
-      catchError(this.errorMgmt)
-    );
+    let url = `${this.baseUri}/read?id=${id}`;
+    return this.http
+      .get<ApiResponse<User>>(url /*, { headers: this.headers }*/)
+      .pipe(
+        map((res) => {
+          return res.response || {};
+        }),
+        catchError(this.errorMgmt)
+      );
   }
 
   // Update User
-  updateUser(data): Observable<any> {
+  updateUser(data: User): Observable<any> {
     let url = `${this.baseUri}/update`;
     return this.http
       .put(url, data /*, { headers: this.headers }*/)
@@ -58,7 +60,7 @@ export class UserService {
 
   // Delete User
   deleteUser(id): Observable<any> {
-    let url = `${this.baseUri}/delete/${id}`;
+    let url = `${this.baseUri}/delete?id=${id}`;
     return this.http
       .delete(url /*, { headers: this.headers }*/)
       .pipe(catchError(this.errorMgmt));
